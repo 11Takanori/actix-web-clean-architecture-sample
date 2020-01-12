@@ -1,5 +1,7 @@
-use actix_web::{error, http::StatusCode, HttpResponse};
+use actix_web::{http::StatusCode, HttpResponse};
 use failure::Fail;
+
+// FIXME error handling
 
 #[derive(Fail, Debug)]
 pub enum Error {
@@ -9,7 +11,7 @@ pub enum Error {
     NotFound,
 }
 
-impl error::ResponseError for Error {
+impl actix_web::error::ResponseError for Error {
     fn status_code(&self) -> StatusCode {
         match *self {
             Error::InternalServerError => StatusCode::INTERNAL_SERVER_ERROR,
@@ -27,14 +29,14 @@ impl error::ResponseError for Error {
     }
 }
 
-impl From<reqwest::Error> for Error {
-    fn from(error: reqwest::Error) -> Self {
-        if let Some(status) = error.status() {
-            if status == 404 {
-                return Error::NotFound;
-            }
-        }
+impl From<awc::error::SendRequestError> for Error {
+    fn from(_error: awc::error::SendRequestError) -> Self {
+        Error::InternalServerError
+    }
+}
 
+impl From<awc::error::JsonPayloadError> for Error {
+    fn from(_error: awc::error::JsonPayloadError) -> Self {
         Error::InternalServerError
     }
 }

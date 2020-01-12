@@ -7,7 +7,7 @@ use async_trait::async_trait;
 #[derive(Clone, Debug)]
 pub struct NewsGateway;
 
-#[async_trait]
+#[async_trait(?Send)]
 impl NewsPort for NewsGateway {
     async fn find_news(self) -> Result<News, Error> {
         let news_json = news_driver::get_news().await;

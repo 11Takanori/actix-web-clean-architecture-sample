@@ -1,12 +1,15 @@
 use crate::error::Error;
 use serde::{Deserialize, Serialize};
+use actix_web::client::Client;
 
 pub async fn get_news() -> Result<NewsJson, Error> {
-    let response = reqwest::get("https://hacker-news.firebaseio.com/v0/item/22018335.json")
-        .await.unwrap()
+    let json = Client::default()
+        .get("https://hacker-news.firebaseio.com/v0/item/22018335.json")
+        .send()
+        .await?
         .json::<NewsJson>()
-        .await.unwrap();
-    Ok(response)
+        .await?;
+    Ok(json)
 }
 
 #[derive(Serialize, Deserialize, Debug)]
