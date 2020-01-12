@@ -11,7 +11,6 @@ extern crate log;
 
 use std::env;
 
-
 fn main() {
     std::env::set_var("RUST_BACKTRACE", "1");
 

@@ -1,6 +1,6 @@
 use crate::error::Error;
-use serde::{Deserialize, Serialize};
 use actix_web::client::Client;
+use serde::{Deserialize, Serialize};
 
 pub async fn get_news() -> Result<NewsJson, Error> {
     let json = Client::default()
