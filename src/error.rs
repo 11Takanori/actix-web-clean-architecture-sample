@@ -1,7 +1,7 @@
 use actix_web::{http::StatusCode, HttpResponse};
 use failure::Fail;
 
-// FIXME error handling
+// FIXME: error handling
 
 #[derive(Fail, Debug)]
 pub enum Error {

@@ -8,8 +8,12 @@ pub async fn news(data: web::Data<Container>) -> impl Responder {
     let news = news_get_usecase::execute(data.news_port.clone()).await;
 
     match news {
-        Ok(n) => HttpResponse::Ok().json(NewsJson::from(n)),
-        // TODO
+        Ok(news) => HttpResponse::Ok().json(
+            news.into_iter()
+                .map(|news| NewsJson::from(news))
+                .collect::<Vec<NewsJson>>(),
+        ),
+        // FIXME: error handling
         Err(_) => HttpResponse::InternalServerError().json(""),
     }
 }
