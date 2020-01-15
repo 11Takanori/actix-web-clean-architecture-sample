@@ -3,11 +3,11 @@ use crate::error::Error;
 use actix_web::client::Client;
 use serde::{Deserialize, Serialize};
 
-pub async fn get_news(id: NewsId) -> Result<NewsJson, Error> {
+pub async fn get_news(id: u32) -> Result<NewsJson, Error> {
     let json = Client::default()
         .get(format!(
             "https://hacker-news.firebaseio.com/v0/item/{}/.json",
-            id.0
+            id
         ))
         .send()
         .await?

@@ -16,7 +16,7 @@ impl NewsPort for NewsGateway {
         // TODO: call news_driver::get_news asynchronously
         for id in ids {
             info!("{:?}", id);
-            let news_json = news_driver::get_news(id).await;
+            let news_json = news_driver::get_news(id.0).await;
             json.push(news_json)
         }
 
