@@ -5,7 +5,7 @@ use actix_web::{web, HttpResponse, Responder};
 use serde::{Deserialize, Serialize};
 
 pub async fn news(data: web::Data<Container>) -> impl Responder {
-    let news = news_get_usecase::execute(data.news_port.clone()).await;
+    let news = news_get_usecase::execute(&data.news_port).await;
 
     match news {
         Ok(news) => HttpResponse::Ok().json(

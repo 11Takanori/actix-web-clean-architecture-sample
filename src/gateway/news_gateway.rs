@@ -8,8 +8,8 @@ use async_trait::async_trait;
 pub struct NewsGateway;
 
 #[async_trait(?Send)]
-impl NewsPort for NewsGateway {
-    async fn find_news(self, ids: NewsIds) -> Result<NewsList, Error> {
+impl NewsPort for &NewsGateway {
+    async fn find_news(&self, ids: NewsIds) -> Result<NewsList, Error> {
         // let ids = vec![NewsId(22018335), NewsId(22018334), NewsId(22018333), NewsId(22018332)];
         let mut json = vec![];
 
@@ -35,7 +35,7 @@ impl NewsPort for NewsGateway {
         Ok(news)
     }
 
-    async fn find_news_ids(self) -> Result<NewsIds, Error> {
+    async fn find_news_ids(&self) -> Result<NewsIds, Error> {
         let news_id_json = news_driver::get_news_ids().await;
         match news_id_json {
             Ok(ids) => Ok(ids
