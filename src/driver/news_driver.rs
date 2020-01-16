@@ -1,4 +1,3 @@
-use crate::domain::news::NewsId;
 use crate::error::Error;
 use actix_web::client::Client;
 use serde::{Deserialize, Serialize};
