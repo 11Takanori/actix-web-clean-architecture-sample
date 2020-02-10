@@ -4,11 +4,11 @@ use crate::error::Error;
 use crate::port::news_port::NewsPort;
 use async_trait::async_trait;
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Debug, Copy, Clone)]
 pub struct NewsGateway;
 
 #[async_trait(?Send)]
-impl NewsPort for &NewsGateway {
+impl NewsPort for NewsGateway {
     async fn find_news(&self, ids: NewsIds) -> Result<NewsList, Error> {
         // let ids = vec![NewsId(22018335), NewsId(22018334), NewsId(22018333), NewsId(22018332)];
         let mut json = vec![];
