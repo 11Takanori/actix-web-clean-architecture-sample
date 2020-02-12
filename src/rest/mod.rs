@@ -21,7 +21,7 @@ pub async fn build() -> std::io::Result<()> {
 }
 
 fn routes(app: &mut web::ServiceConfig) {
-    app.service(web::resource("/v1/systems/ping").route(web::get().to(systems::ping)))
+    app.service(web::resource("/healthz").route(web::get().to(systems::healthz)))
         .service(web::resource("v1/news").route(web::get().to(news::news)));
 }
 

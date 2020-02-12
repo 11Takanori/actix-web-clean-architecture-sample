@@ -10,17 +10,15 @@ pub struct NewsGateway;
 #[async_trait(?Send)]
 impl NewsPort for NewsGateway {
     async fn find_news(&self, ids: NewsIds) -> Result<NewsList, Error> {
-        // let ids = vec![NewsId(22018335), NewsId(22018334), NewsId(22018333), NewsId(22018332)];
         let mut json = vec![];
 
         // TODO: call news_driver::get_news asynchronously
         for id in ids {
-            info!("{:?}", id);
             let news_json = news_driver::get_news(id.0).await;
             json.push(news_json)
         }
 
-        let news = json
+        Ok(json
             .into_iter()
             .filter_map(Result::ok)
             .map(|n| {
@@ -30,9 +28,7 @@ impl NewsPort for NewsGateway {
                     n.text.unwrap_or("".to_string()),
                 )
             })
-            .collect::<NewsList>();
-
-        Ok(news)
+            .collect::<NewsList>())
     }
 
     async fn find_news_ids(&self) -> Result<NewsIds, Error> {

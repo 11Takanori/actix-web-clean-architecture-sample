@@ -4,10 +4,7 @@ use serde::{Deserialize, Serialize};
 
 pub async fn get_news(id: u32) -> Result<NewsJson, Error> {
     let json = Client::default()
-        .get(format!(
-            "https://hacker-news.firebaseio.com/v0/item/{}/.json",
-            id
-        ))
+        .get(format!("https://news.example.com/v0/item/{}/.json", id))
         .send()
         .await?
         .json::<NewsJson>()
@@ -17,7 +14,7 @@ pub async fn get_news(id: u32) -> Result<NewsJson, Error> {
 
 pub async fn get_news_ids() -> Result<NewsIdsJson, Error> {
     let json = Client::default()
-        .get("https://hacker-news.firebaseio.com/v0/topstories.json")
+        .get("https://news.example.com/v0/topstories.json")
         .send()
         .await?
         .json::<NewsIdsJson>()
